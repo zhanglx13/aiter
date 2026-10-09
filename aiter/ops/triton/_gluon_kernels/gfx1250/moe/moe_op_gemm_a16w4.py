@@ -40,6 +40,8 @@ def matmul_launch_metadata(grid, kernel, args):
     ret[f"flops{nbits}"] = 2.0 * fM * N * fK
 
     gindx = args.get("GatherIndx", None)
+    if gindx is not None:
+        gindx = gindx.to(torch.int32)
     n_x_bytes = X.numel() * X.element_size()
     n_y_bytes = Y.numel() * Y.element_size()
     if hist is not None:
